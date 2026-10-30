@@ -132,7 +132,7 @@ while keep_playing == "Y":
 
         # Allow player to pick a letter and regex validate input.
         while True:
-                player_guess = input("\nPick a letter: ")
+                player_guess = input("Pick a letter: ")
         
                 if re.fullmatch(r"[a-zA-Z]+", player_guess, re.IGNORECASE):
                     player_guess = player_guess.upper()
@@ -180,12 +180,16 @@ while keep_playing == "Y":
                                incorrect_guesses_letters, working_letters_list, word)
 
             if incorrect_guess == allowed_incorrect_guesses:
+                clear_screen()
+                print_title()
                 print("You lost!")
                 print(f"The word was: {word}")
                 time.sleep(2)
                 break
 
     if working_letters_list == word_letters_list:
+        clear_screen()
+        print_title()
         print("You won!")
         time.sleep(2)
 
