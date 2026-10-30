@@ -1,9 +1,7 @@
 name: Python Code Validation
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
     paths-ignore:
       - README.md
 
