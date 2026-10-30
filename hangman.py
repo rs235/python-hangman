@@ -7,7 +7,7 @@ import os
 
 def clear_screen():
     if os.name == "nt":
-        subprocess.run("cls")
+        subprocess.run("cls", shell=True)
     else:
         subprocess.run("clear")
 
