@@ -203,8 +203,8 @@ while keep_playing == "Y":
             break
         else:
             clear_screen()
-            print_progress(allowed_incorrect_guesses, category, incorrect_guess, correct_guesses_letters, \
-                                           incorrect_guesses_letters, working_letters_list, word)
+            print_title()
+            print("Play again? (Y/N): ")
             print("Invalid input")
             time.sleep(1)
 
