@@ -10,5 +10,6 @@
 
 Run the script in a terminal have fun.
 
-To do:
+### To do:
 - Add a score counter and display a score summary at the end of the game.
+- Clean up code.
