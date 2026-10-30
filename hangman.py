@@ -4,6 +4,7 @@ import re
 import subprocess
 import time
 
+
 def clear_screen():
     if os.name == "nt":
         subprocess.run("cls", check=False, shell=True)
