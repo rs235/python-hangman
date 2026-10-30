@@ -8,7 +8,7 @@ def clear_screen():
     if os.name == "nt":
         subprocess.run("cls", check=False, shell=True)
     else:
-        subprocess.run("clear")
+        subprocess.run("clear", check=False)
 
 def print_title():
     print("###################\n"
@@ -133,7 +133,7 @@ while keep_playing == "Y":
                     working_letters_list, 
                     selected_word)
 
-    # Secondary game loop that checks if win condition has been met.
+    # Secondary game loop that checks if win condition has been met
     while working_letters_list != word_letters_list:
 
         # Allow player to pick a letter and regex validate input.
