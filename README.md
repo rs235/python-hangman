@@ -12,5 +12,6 @@ Run the script in a terminal have fun.
 
 ### To do:
 - Add a score counter and display a score summary at the end of the game.
-- Make user input regex validation into a python module to further reduce code repetition.
+- Handle player trying the same letter multiple times. Right now correct letter can be tried multiple times with no feedback and incorrect letter tried multiple times adds to incorrect guesses (debatable whether this is actually a problem).
+- Introduce a win/loss condition and redo the game logic around it to make it clearer.
 - Clean up code.

@@ -18,21 +18,16 @@ def print_title():
 
 def print_progress(allowed_incorrect_guesses,
                     category,
-                    incorrect_guess,
-                    correct_guesses_letters,
+                    incorrect_guesses_count,
                     incorrect_guesses_letters,
                     working_letters_list,
-                    word):
-    for character in working_letters_list:
-        correct_guesses_letters += character
-        correct_guesses_letters += " "
-
-    print(f"Remaining incorrect guesses: {allowed_incorrect_guesses - incorrect_guess}")
+                    selected_word):
+    correct_guesses_letters = " ".join(working_letters_list)
+    print(f"Remaining incorrect guesses: {allowed_incorrect_guesses - incorrect_guesses_count}")
     print(f"Word category: {category.capitalize()}")
-    print(f"Word length: {len(word)} characters\n")
+    print(f"Word length: {len(selected_word)} characters\n")
     print(f"Progress: {correct_guesses_letters}")
     print(f"Incorrect guesses: {incorrect_guesses_letters}\n")
-    correct_guesses_letters = ""
 
 words_dictionary = {
     "fruits": [
@@ -85,46 +80,49 @@ words_dictionary = {
 }
 
 keep_playing = "Y"
-correct_guesses_letters = ""
-incorrect_guesses_letters = ""
 
 # Main loop
 while keep_playing == "Y":
+
+    # Reset variables after game restart
+    incorrect_guesses_count = 0
+    word_letters_list = []
+    working_letters_list = []
+    incorrect_guesses_letters = ""
     
     # Prepare a random word from a random category.
     category = random.choice(list(words_dictionary.keys()))
     category_list = words_dictionary[category]
-    word = random.choice(category_list).upper()
+    selected_word = random.choice(category_list).upper()
 
-    player_guess = ""
-    letter_index = 0
-    incorrect_guess = 0
 
-    word_letters_list = []
-    working_letters_list = []
-    correct_guesses_letters = ""
-    incorrect_guesses_letters = ""
 
     # Allow player to configure number of incorrect guesses.
     while True:
         clear_screen()
         print_title()
-        allowed_incorrect_guesses = input("How many incorrect guesses is the player allowed to make?\n" \
-                                "Pick from 1 to 10: ")
+        allowed_incorrect_guesses = input("How many incorrect guesses is the player allowed to make?\n"
+                                          "Pick from 1 to 10: ")
 
-        if re.fullmatch(r"([1-9]|10)", allowed_incorrect_guesses, re.IGNORECASE):
-            allowed_incorrect_guesses = (int(allowed_incorrect_guesses))
+        if re.fullmatch(r"([1-9]|10)", allowed_incorrect_guesses):
             break
         else:
+            clear_screen()
+            print_title()
+            print("How many incorrect guesses is the player allowed to make?\n"
+                  "Pick from 1 to 10: ")
             print("Invalid input!")
             time.sleep(1)
 
+    # Change variable type from str to int so it can be used in conditions later
+    allowed_incorrect_guesses = (int(allowed_incorrect_guesses))
+
     # Prepare list of empty spaces for characters in word
-    for letter in word:
+    for letter in selected_word:
         working_letters_list.append("_")
 
     # Prepare list of characters in word
-    for letter in word:
+    for letter in selected_word:
         word_letters_list.append(letter)
 
     # Print progress
@@ -132,11 +130,10 @@ while keep_playing == "Y":
     print_title()
     print_progress(allowed_incorrect_guesses,
                     category,
-                    incorrect_guess,
-                    correct_guesses_letters,
+                    incorrect_guesses_count,
                     incorrect_guesses_letters,
                     working_letters_list, 
-                    word)
+                    selected_word)
 
     # Secondary game loop that checks if win condition has been met.
     while working_letters_list != word_letters_list:
@@ -145,30 +142,30 @@ while keep_playing == "Y":
         while True:
             player_guess = input("Pick a letter: ")
     
-            if re.fullmatch(r"[a-zA-Z]", player_guess, re.IGNORECASE):
+            if re.fullmatch(r"[a-zA-Z]", player_guess):
                 player_guess = player_guess.upper()
                 break
             else:
                 clear_screen()
+                print_title()
                 print_progress(allowed_incorrect_guesses,
                                 category,
-                                incorrect_guess,
-                                correct_guesses_letters,
+                                incorrect_guesses_count,
                                 incorrect_guesses_letters,
                                 working_letters_list, 
-                                word)
+                                selected_word)
                 print("Invalid input")
                 time.sleep(1)
 
         # Check if player guess is contained within word
-        if player_guess in word:
+        if player_guess in selected_word:
             print("\nCorrect!\n")
 
             letter_index = 0
 
             # Find letter_index of player guess in word and replace blanks with player_guess
             while True:
-                letter_index = word.find(player_guess, letter_index)
+                letter_index = selected_word.find(player_guess, letter_index)
 
                 if letter_index == -1:
                     break
@@ -181,16 +178,15 @@ while keep_playing == "Y":
             print_title()
             print_progress(allowed_incorrect_guesses,
                             category,
-                            incorrect_guess,
-                            correct_guesses_letters,
+                            incorrect_guesses_count,
                             incorrect_guesses_letters,
                             working_letters_list, 
-                            word)
+                            selected_word)
             
         # Count incorrect guesses and stop the game when limit is reached
         else:
             print("\nIncorrect!\n")
-            incorrect_guess += 1
+            incorrect_guesses_count += 1
             if player_guess not in incorrect_guesses_letters:
                 incorrect_guesses_letters += player_guess
 
@@ -199,17 +195,16 @@ while keep_playing == "Y":
             print_title()
             print_progress(allowed_incorrect_guesses,
                            category,
-                           incorrect_guess,
-                           correct_guesses_letters,
+                           incorrect_guesses_count,
                            incorrect_guesses_letters,
                            working_letters_list, 
-                           word)
+                           selected_word)
 
-            if incorrect_guess == allowed_incorrect_guesses:
+            if incorrect_guesses_count >= allowed_incorrect_guesses:
                 clear_screen()
                 print_title()
                 print("You lost!")
-                print(f"The word was: {word}")
+                print(f"The word was: {selected_word}")
                 time.sleep(2)
                 break
 
@@ -224,7 +219,7 @@ while keep_playing == "Y":
         print_title()
         keep_playing = input("Play again? (Y/N): ")
 
-        if re.fullmatch(r"[yn]", keep_playing, re.IGNORECASE):
+        if re.fullmatch(r"[yn]", keep_playing):
             keep_playing = keep_playing.upper()
             break
         else:
