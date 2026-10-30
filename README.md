@@ -12,4 +12,5 @@ Run the script in a terminal have fun.
 
 ### To do:
 - Add a score counter and display a score summary at the end of the game.
+- Make user input regex validation into a python module to further reduce code repetition.
 - Clean up code.
