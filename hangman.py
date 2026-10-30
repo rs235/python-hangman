@@ -1,13 +1,12 @@
-import subprocess
-import random
-import time
-import re
 import os
-
+import random
+import re
+import subprocess
+import time
 
 def clear_screen():
     if os.name == "nt":
-        subprocess.run("cls", shell=True)
+        subprocess.run("cls", check=False, shell=True)
     else:
         subprocess.run("clear")
 
@@ -86,7 +85,7 @@ while keep_playing == "Y":
 
     # Reset variables after game restart
     incorrect_guesses_count = 0
-    word_letters_list = []
+    # word_letters_list = []
     working_letters_list = []
     incorrect_guesses_letters = ""
     
@@ -122,8 +121,7 @@ while keep_playing == "Y":
         working_letters_list.append("_")
 
     # Prepare list of characters in word
-    for letter in selected_word:
-        word_letters_list.append(letter)
+    word_letters_list = list(selected_word)
 
     # Print progress
     clear_screen()
