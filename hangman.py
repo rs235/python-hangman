@@ -12,12 +12,17 @@ def clear_screen():
         subprocess.run("clear")
 
 def print_title():
-    print("###################\n" \
-          "#  H_A_N_G_M_A_N  #\n" \
+    print("###################\n"
+          "#  H_A_N_G_M_A_N  #\n"
           "###################\n")
 
-def print_progress(allowed_incorrect_guesses, category, incorrect_guess, correct_guesses_letters, \
-                   incorrect_guesses_letters, working_letters_list, word):
+def print_progress(allowed_incorrect_guesses,
+                    category,
+                    incorrect_guess,
+                    correct_guesses_letters,
+                    incorrect_guesses_letters,
+                    working_letters_list,
+                    word):
     for character in working_letters_list:
         correct_guesses_letters += character
         correct_guesses_letters += " "
@@ -114,11 +119,6 @@ while keep_playing == "Y":
             print("Invalid input!")
             time.sleep(1)
 
-    clear_screen()
-    print_title()
-    print_progress(allowed_incorrect_guesses, category, incorrect_guess, correct_guesses_letters, \
-                   incorrect_guesses_letters, working_letters_list, word)
-
     # Prepare list of empty spaces for characters in word
     for letter in word:
         working_letters_list.append("_")
@@ -127,22 +127,38 @@ while keep_playing == "Y":
     for letter in word:
         word_letters_list.append(letter)
 
+    # Print progress
+    clear_screen()
+    print_title()
+    print_progress(allowed_incorrect_guesses,
+                    category,
+                    incorrect_guess,
+                    correct_guesses_letters,
+                    incorrect_guesses_letters,
+                    working_letters_list, 
+                    word)
+
     # Secondary game loop that checks if win condition has been met.
     while working_letters_list != word_letters_list:
 
         # Allow player to pick a letter and regex validate input.
         while True:
-                player_guess = input("Pick a letter: ")
-        
-                if re.fullmatch(r"[a-zA-Z]+", player_guess, re.IGNORECASE):
-                    player_guess = player_guess.upper()
-                    break
-                else:
-                    clear_screen()
-                    print_progress(allowed_incorrect_guesses, category, incorrect_guess, correct_guesses_letters, \
-                                                   incorrect_guesses_letters, working_letters_list, word)
-                    print("Invalid input")
-                    time.sleep(1)
+            player_guess = input("Pick a letter: ")
+    
+            if re.fullmatch(r"[a-zA-Z]", player_guess, re.IGNORECASE):
+                player_guess = player_guess.upper()
+                break
+            else:
+                clear_screen()
+                print_progress(allowed_incorrect_guesses,
+                                category,
+                                incorrect_guess,
+                                correct_guesses_letters,
+                                incorrect_guesses_letters,
+                                working_letters_list, 
+                                word)
+                print("Invalid input")
+                time.sleep(1)
 
         # Check if player guess is contained within word
         if player_guess in word:
@@ -163,8 +179,13 @@ while keep_playing == "Y":
             # Print progress to terminal
             clear_screen()
             print_title()
-            print_progress(allowed_incorrect_guesses, category, incorrect_guess, correct_guesses_letters, \
-                               incorrect_guesses_letters, working_letters_list, word)
+            print_progress(allowed_incorrect_guesses,
+                            category,
+                            incorrect_guess,
+                            correct_guesses_letters,
+                            incorrect_guesses_letters,
+                            working_letters_list, 
+                            word)
             
         # Count incorrect guesses and stop the game when limit is reached
         else:
@@ -176,8 +197,13 @@ while keep_playing == "Y":
             # Print progress to terminal
             clear_screen()
             print_title()
-            print_progress(allowed_incorrect_guesses, category, incorrect_guess, correct_guesses_letters, \
-                               incorrect_guesses_letters, working_letters_list, word)
+            print_progress(allowed_incorrect_guesses,
+                           category,
+                           incorrect_guess,
+                           correct_guesses_letters,
+                           incorrect_guesses_letters,
+                           working_letters_list, 
+                           word)
 
             if incorrect_guess == allowed_incorrect_guesses:
                 clear_screen()
